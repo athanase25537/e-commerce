@@ -29,6 +29,8 @@ final class CategoryController extends AbstractController
         if($categoryForm->isSubmitted() && $categoryForm->isValid()) {
             $em->persist($categoryForm->getData());
             $em->flush();
+
+            $this->addFlash('success', 'Categorie bien enregistrer !');
         }
 
         return $this->render('category/index.html.twig', [
