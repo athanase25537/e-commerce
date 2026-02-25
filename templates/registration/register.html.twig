@@ -2,23 +2,42 @@
 
 {% block title %}Register{% endblock %}
 
+{% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
+
 {% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-9 col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h1 class="h4 mb-0">Create account</h1>
+                        <a class="link-secondary text-decoration-none" href="{{ path('app_home') }}">Home</a>
+                    </div>
 
-    <li><a href="{{ path('app_home') }}">Go to Home >>></a></li>
+                    {{ form_errors(registrationForm) }}
 
-    <h1>Register</h1>
+                    {{ form_start(registrationForm, { attr: { class: 'vstack gap-3' } }) }}
+                        {{ form_row(registrationForm.firstname) }}
+                        {{ form_row(registrationForm.lastname) }}
+                        {{ form_row(registrationForm.email) }}
+                        {{ form_row(registrationForm.plainPassword, {
+                            label: 'Password'
+                        }) }}
+                        {{ form_row(registrationForm.agreeTerms) }}
 
-    {{ form_errors(registrationForm) }}
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                    {{ form_end(registrationForm) }}
 
-    {{ form_start(registrationForm) }} 
-        {{ form_row(registrationForm.firstname )}}
-        {{ form_row(registrationForm.lastname) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                    <div class="text-center mt-3">
+                        <small class="text-muted">
+                            Already have an account?
+                            <a class="text-decoration-none" href="{{ path('app_login') }}">Sign in</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

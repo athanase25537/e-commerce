@@ -3,18 +3,28 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li><a href="{{ path('app_register') }}">Creer un compte</a></li>
-        <li><a href="{{ path('app_login') }}">Se connecter</a></li>
-    </ul>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-9 col-lg-7">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h1 class="h4 mb-2">Hello {{ controller_name }}!</h1>
+                    <p class="text-muted mb-4">
+                        This page uses Bootstrap styling for your templates.
+                    </p>
+                    <div class="list-group">
+                        <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{{ path('app_register') }}">
+                            Creer un compte
+                            <span class="badge bg-primary rounded-pill">Nouveau</span>
+                        </a>
+                        <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{{ path('app_login') }}">
+                            Se connecter
+                            <span class="badge bg-secondary rounded-pill">Retour</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
