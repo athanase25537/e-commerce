@@ -3,11 +3,16 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
+
+    <li><a href="{{ path('app_home') }}">Go to Home >>></a></li>
+
     <h1>Register</h1>
 
     {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
+    {{ form_start(registrationForm) }} 
+        {{ form_row(registrationForm.firstname )}}
+        {{ form_row(registrationForm.lastname) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
