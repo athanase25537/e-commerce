@@ -35,6 +35,7 @@ final class CategoryController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Categorie bien enregistrer !');
+            return $this->redirectToRoute('app_category');
         }
 
         return $this->render('category/new.html.twig', [
@@ -52,7 +53,7 @@ final class CategoryController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Categorie bien mis a jour !');
-            return $this->redirect('app_category_new');
+            return $this->redirectToRoute('app_category');
         }
 
         return $this->render('category/update.html.twig', [
