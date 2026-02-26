@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Form\CategoryType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,5 +38,22 @@ final class CategoryController extends AbstractController
             'form' => $categoryForm
         ]);
         
+    }
+
+    #[Route('/{id}/update', name: 'app_category_update')]
+    public function updateCategory(Category $category, Request $request, EntityManagerInterface $em): Response
+    {
+        $categoryForm = $this->createForm(CategoryType::class, $category);
+        $categoryForm->handleRequest($request);
+        if($categoryForm->isSubmitted() && $categoryForm->isValid()) {
+            $em->flush();
+
+            $this->addFlash('success', 'Categorie bien mis a jour !');
+            return $this->redirect('app_category_new');
+        }
+
+        return $this->render('category/update.html.twig', [
+            'form' => $categoryForm
+        ]);
     }
 }
