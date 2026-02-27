@@ -1,3 +1,11 @@
+{% set currentRoute = app.request.attributes.get('_route') %}
+{% set isUserRoute = currentRoute starts with 'app_user' %}
+{% set isCategoryRoute = currentRoute starts with 'app_category' %}
+{% set isCategoryNewRoute = currentRoute in ['app_category_new', 'app_category_update'] %}
+{% set isHomeRoute = currentRoute == 'app_home' %}
+{% set isLoginRoute = currentRoute == 'app_login' %}
+{% set isRegisterRoute = currentRoute == 'app_register' %}
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container">
         <a class="navbar-brand" href="{{ path('app_home') }}">E-commerce</a>
@@ -7,14 +15,35 @@
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
+                    <a class="nav-link {{ isHomeRoute ? 'active' : '' }}"
+                       {{ isHomeRoute ? 'aria-current="page"' : '' }}
+                       href="{{ path('app_home') }}">
+                        Accueil
+                    </a>
+                </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link {{ isUserRoute ? 'active' : '' }}"
+                       {{ isUserRoute ? 'aria-current="page"' : '' }}
+                       href="{{ path('app_user') }}">
+                        Utilisateurs
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_category') }}">Categories</a>
+                    <a class="nav-link {{ isCategoryRoute ? 'active' : '' }}"
+                       {{ isCategoryRoute ? 'aria-current="page"' : '' }}
+                       href="{{ path('app_category') }}">
+                        Categories
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_category_new') }}">Nouvelle categorie</a>
+                    <a class="nav-link {{ isCategoryNewRoute ? 'active' : '' }}"
+                       {{ isCategoryNewRoute ? 'aria-current="page"' : '' }}
+                       href="{{ path('app_category_new') }}">
+                        Nouvelle categorie
+                    </a>
                 </li>
+                {% endif %}
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 {% if app.user %}
@@ -26,10 +55,18 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                        <a class="nav-link {{ isLoginRoute ? 'active' : '' }}"
+                           {{ isLoginRoute ? 'aria-current="page"' : '' }}
+                           href="{{ path('app_login') }}">
+                            Connexion
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+                        <a class="nav-link {{ isRegisterRoute ? 'active' : '' }}"
+                           {{ isRegisterRoute ? 'aria-current="page"' : '' }}
+                           href="{{ path('app_register') }}">
+                            Inscription
+                        </a>
                     </li>
                 {% endif %}
             </ul>
