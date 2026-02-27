@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mettre a jour un utilisateur{% endblock %}
+
+{% block body %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-7">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h1 class="h4 mb-0">Mettre a jour l'utilisateur</h1>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge text-bg-light">Gestion</span>
+                            <a href="{{ path('app_user') }}" class="btn btn-sm btn-outline-secondary">Retour</a>
+                        </div>
+                    </div>
+
+                    <p class="text-muted mb-4">
+                        Mettez a jour les informations de {{ user.firstname }} {{ user.lastname }}.
+                    </p>
+
+                    {{ form_start(form, {'attr': {'class': 'row g-3'}}) }}
+                        <div class="col-md-6">
+                            {{ form_row(form.firstname, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.lastname, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="col-12">
+                            {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="col-12">
+                            {{ form_row(form.roles) }}
+                        </div>
+                        <div class="col-12">
+                            {{ form_row(form.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="col-12 d-flex justify-content-end">
+                            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary px-4'}}) }}
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -5,8 +5,11 @@
 {% block body %}
 <div class="container py-5">
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
-        <h1 class="h3 mb-0">Utilisateurs</h1>
-        <span class="text-muted small">{{ users|length }} utilisateur(s)</span>
+        <div>
+            <h1 class="h3 mb-1">Utilisateurs</h1>
+            <span class="text-muted small">{{ users|length }} utilisateur(s)</span>
+        </div>
+        <a href="{{ path('app_user_new') }}" class="btn btn-primary">Ajouter un utilisateur</a>
     </div>
 
     {% if users is empty %}
@@ -20,6 +23,7 @@
                         <th scope="col">Nom</th>
                         <th scope="col">Email</th>
                         <th scope="col">Roles</th>
+                        <th scope="col" class="text-end">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +35,33 @@
                             </td>
                             <td>{{ user.email }}</td>
                             <td class="text-muted small">{{ user.roles|join(', ') }}</td>
+                            <td class="text-end">
+                                <a href="{{ path('app_user_update', {id: user.id}) }}"
+                                   class="btn btn-sm btn-outline-secondary me-2"
+                                   title="Mettre a jour"
+                                   aria-label="Mettre a jour">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16" aria-hidden="true">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706l-1 1a.5.5 0 0 1-.708 0L13 3.207l1-1a.5.5 0 0 1 .707 0l.795.793z"/>
+                                        <path d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                        <path d="M11.5 2.5l-7 7V11h1.5l7-7-1.5-1.5z"/>
+                                    </svg>
+                                </a>
+                                <form method="post"
+                                      action="{{ path('app_user_delete', {id: user.id}) }}"
+                                      class="d-inline"
+                                      onsubmit="return confirm('Supprimer cet utilisateur ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete_user_' ~ user.id) }}">
+                                    <button type="submit"
+                                            class="btn btn-sm btn-outline-danger"
+                                            title="Supprimer"
+                                            aria-label="Supprimer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16" aria-hidden="true">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v7a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0V6z"/>
+                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1 0-2H5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1h2.5a1 1 0 0 1 1 1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118z"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
