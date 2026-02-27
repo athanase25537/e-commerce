@@ -5,6 +5,8 @@
 {% set isCategoryNewRoute = currentRoute == 'app_category_new' %}
 {% set isSubCategoryRoute = currentRoute starts with 'app_sub_category' %}
 {% set isSubCategoryNewRoute = currentRoute == 'app_sub_category_new' %}
+{% set isProductRoute = currentRoute starts with 'app_product' %}
+{% set isProductNewRoute = currentRoute == 'app_product_new' %}
 {% set isHomeRoute = currentRoute == 'app_home' %}
 {% set isLoginRoute = currentRoute == 'app_login' %}
 {% set isRegisterRoute = currentRoute == 'app_register' %}
@@ -65,6 +67,20 @@
                        {{ isSubCategoryNewRoute ? 'aria-current="page"' : '' }}
                        href="{{ path('app_sub_category_new') }}">
                         Nouvelle sous-categorie
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ isProductRoute ? 'active' : '' }}"
+                       {{ isProductRoute ? 'aria-current="page"' : '' }}
+                       href="{{ path('app_product_index') }}">
+                        Produits
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ isProductNewRoute ? 'active' : '' }}"
+                       {{ isProductNewRoute ? 'aria-current="page"' : '' }}
+                       href="{{ path('app_product_new') }}">
+                        Nouveau produit
                     </a>
                 </li>
                 {% endif %}

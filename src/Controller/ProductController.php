@@ -7,6 +7,7 @@ use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -30,6 +31,26 @@ final class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile|null $imageFile */
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = preg_replace('/[^A-Za-z0-9_-]/', '-', $originalFilename);
+                $safeFilename = trim($safeFilename, '-');
+                if ($safeFilename === '') {
+                    $safeFilename = 'image';
+                }
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                $targetDirectory = $this->getParameter('kernel.project_dir') . '/public/uploads/images';
+                if (!is_dir($targetDirectory)) {
+                    mkdir($targetDirectory, 0775, true);
+                }
+
+                $imageFile->move($targetDirectory, $newFilename);
+                $product->setImage($newFilename);
+            }
+
             $entityManager->persist($product);
             $entityManager->flush();
 
@@ -57,6 +78,26 @@ final class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile|null $imageFile */
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = preg_replace('/[^A-Za-z0-9_-]/', '-', $originalFilename);
+                $safeFilename = trim($safeFilename, '-');
+                if ($safeFilename === '') {
+                    $safeFilename = 'image';
+                }
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                $targetDirectory = $this->getParameter('kernel.project_dir') . '/public/uploads/images';
+                if (!is_dir($targetDirectory)) {
+                    mkdir($targetDirectory, 0775, true);
+                }
+
+                $imageFile->move($targetDirectory, $newFilename);
+                $product->setImage($newFilename);
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
