@@ -43,6 +43,12 @@ class ProductType extends AbstractType
                     'min' => 0,
                 ],
             ])
+            ->add('stock', IntegerType::class, [
+                'label' => 'Stock',
+                'attr' => [
+                    'min' => 0,
+                ],
+            ])
             ->add('subCategories', EntityType::class, [
                 'class' => SubCategory::class,
                 'choice_label' => 'name',

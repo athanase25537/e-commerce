@@ -46,6 +46,16 @@
                                 <td>{{ product.price }}</td>
                             </tr>
                             <tr>
+                                <th scope="row" class="text-muted">Stock</th>
+                                <td>
+                                    {% if product.stock is not null %}
+                                        {{ product.stock }}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
                                 <th scope="row" class="text-muted">Sous-categories</th>
                                 <td>
                                     {% if product.subCategories is empty %}

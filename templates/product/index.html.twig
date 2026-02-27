@@ -24,6 +24,7 @@
                         <th scope="col">Description</th>
                         <th scope="col">Image</th>
                         <th scope="col">Prix</th>
+                        <th scope="col">Stock</th>
                         <th scope="col">Sous-categories</th>
                         <th scope="col" class="text-end">Actions</th>
                     </tr>
@@ -43,6 +44,13 @@
                                 {% endif %}
                             </td>
                             <td>{{ product.price }}</td>
+                            <td>
+                                {% if product.stock is not null %}
+                                    {{ product.stock }}
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
                             <td>
                                 {% if product.subCategories is empty %}
                                     <span class="text-muted">-</span>

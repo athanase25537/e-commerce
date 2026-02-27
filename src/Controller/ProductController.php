@@ -74,11 +74,12 @@ final class ProductController extends AbstractController
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
+        $oldStock = $product->getStock();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile|null $imageFile */
+
             $imageFile = $form->get('image')->getData();
             if ($imageFile) {
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -97,6 +98,8 @@ final class ProductController extends AbstractController
                 $imageFile->move($targetDirectory, $newFilename);
                 $product->setImage($newFilename);
             }
+            $stock = $form->getData()->getStock() + $oldStock;
+            $product->setStock($stock);
 
             $entityManager->flush();
 
