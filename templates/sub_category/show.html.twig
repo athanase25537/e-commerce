@@ -1,26 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SubCategory{% endblock %}
+{% block title %}Sous-categorie{% endblock %}
 
 {% block body %}
-    <h1>SubCategory</h1>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-7">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h1 class="h4 mb-0">Details de la sous-categorie</h1>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge text-bg-light">Gestion</span>
+                            <a href="{{ path('app_sub_category_index') }}" class="btn btn-sm btn-outline-secondary">Retour</a>
+                        </div>
+                    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ sub_category.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ sub_category.name }}</td>
-            </tr>
-        </tbody>
-    </table>
+                    <table class="table mb-4">
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="text-muted">ID</th>
+                                <td>{{ sub_category.id }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-muted">Nom</th>
+                                <td>{{ sub_category.name }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-muted">Categorie</th>
+                                <td>{{ sub_category.category ? sub_category.category.name : '-' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-    <a href="{{ path('app_sub_category_index') }}">back to list</a>
-
-    <a href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}">edit</a>
-
-    {{ include('sub_category/_delete_form.html.twig') }}
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}" class="btn btn-outline-secondary">
+                            Mettre a jour
+                        </a>
+                        {{ include('sub_category/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

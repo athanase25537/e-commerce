@@ -1,13 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit SubCategory{% endblock %}
+{% block title %}Mettre a jour une sous-categorie{% endblock %}
 
 {% block body %}
-    <h1>Edit SubCategory</h1>
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
 
-    {{ include('sub_category/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-7">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h1 class="h4 mb-0">Mettre a jour la sous-categorie</h1>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge text-bg-light">Gestion</span>
+                            <a href="{{ path('app_sub_category_index') }}" class="btn btn-sm btn-outline-secondary">Retour</a>
+                        </div>
+                    </div>
 
-    <a href="{{ path('app_sub_category_index') }}">back to list</a>
+                    <p class="text-muted mb-4">
+                        Modifiez les informations de {{ sub_category.name }}.
+                    </p>
 
-    {{ include('sub_category/_delete_form.html.twig') }}
+                    {{ include('sub_category/_form.html.twig', {'button_label': 'Mettre a jour'}) }}
+
+                    <div class="mt-3">
+                        {{ include('sub_category/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

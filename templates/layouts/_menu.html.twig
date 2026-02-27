@@ -1,7 +1,10 @@
-{% set currentRoute = app.request.attributes.get('_route') %}
+{% set currentRoute = app.request.attributes.get('_route') ?? '' %}
 {% set isUserRoute = currentRoute starts with 'app_user' %}
+{% set isUserNewRoute = currentRoute == 'app_user_new' %}
 {% set isCategoryRoute = currentRoute starts with 'app_category' %}
-{% set isCategoryNewRoute = currentRoute in ['app_category_new', 'app_category_update'] %}
+{% set isCategoryNewRoute = currentRoute == 'app_category_new' %}
+{% set isSubCategoryRoute = currentRoute starts with 'app_sub_category' %}
+{% set isSubCategoryNewRoute = currentRoute == 'app_sub_category_new' %}
 {% set isHomeRoute = currentRoute == 'app_home' %}
 {% set isLoginRoute = currentRoute == 'app_login' %}
 {% set isRegisterRoute = currentRoute == 'app_register' %}
@@ -30,6 +33,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ isUserNewRoute ? 'active' : '' }}"
+                       {{ isUserNewRoute ? 'aria-current="page"' : '' }}
+                       href="{{ path('app_user_new') }}">
+                        Nouvel utilisateur
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ isCategoryRoute ? 'active' : '' }}"
                        {{ isCategoryRoute ? 'aria-current="page"' : '' }}
                        href="{{ path('app_category') }}">
@@ -41,6 +51,20 @@
                        {{ isCategoryNewRoute ? 'aria-current="page"' : '' }}
                        href="{{ path('app_category_new') }}">
                         Nouvelle categorie
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ isSubCategoryRoute ? 'active' : '' }}"
+                       {{ isSubCategoryRoute ? 'aria-current="page"' : '' }}
+                       href="{{ path('app_sub_category_index') }}">
+                        Sous-categories
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ isSubCategoryNewRoute ? 'active' : '' }}"
+                       {{ isSubCategoryNewRoute ? 'aria-current="page"' : '' }}
+                       href="{{ path('app_sub_category_new') }}">
+                        Nouvelle sous-categorie
                     </a>
                 </li>
                 {% endif %}
