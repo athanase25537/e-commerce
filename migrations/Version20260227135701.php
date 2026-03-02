@@ -28,7 +28,7 @@ final class Version20260227135701 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TEMPORARY TABLE __temp__product AS SELECT id, name, description, price, image FROM product');
         $this->addSql('DROP TABLE product');
-        $this->addSql('CREATE TABLE product (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR(255) NOT NULL, description CLOB NOT NULL, price INTEGER NOT NULL, image VARCHAR(255) DEFAULT NULL)');
+        $this->addSql('CREATE TABLE product (id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL, description TEXT NOT NULL, price INTEGER NOT NULL, image VARCHAR(255) DEFAULT NULL)');
         $this->addSql('INSERT INTO product (id, name, description, price, image) SELECT id, name, description, price, image FROM __temp__product');
         $this->addSql('DROP TABLE __temp__product');
     }
