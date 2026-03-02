@@ -23,17 +23,17 @@ RUN apt-get update \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
 
+# Copie tous les fichiers du projet
+COPY . .
+
+# Installe les dépendances Composer
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
 # Set Apache document root to /public
 RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
     && sed -ri -e 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Install Composer
+# Installe Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-# Copie des fichiers de configuration
-COPY composer.json composer.lock symfony.lock ./
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
-
-COPY . .
 
 RUN chown -R www-data:www-data var
