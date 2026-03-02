@@ -37,7 +37,7 @@
                             <td class="text-muted small">{{ product.description }}</td>
                             <td>
                                 {% if product.image %}
-                                    <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}" class="rounded border"
+                                    <img src="{{ product.image starts with 'http' ? product.image : asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}" class="rounded border"
                                          style="width: 48px; height: 48px; object-fit: cover;">
                                 {% else %}
                                     <span class="text-muted">-</span>
