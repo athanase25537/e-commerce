@@ -29,6 +29,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Copie tous les fichiers du projet
 COPY . .
 
+# Entrypoint pour exécuter les migrations au démarrage
+RUN chmod +x docker/entrypoint.sh \
+    && ln -s /var/www/html/docker/entrypoint.sh /usr/local/bin/entrypoint
+
 # Installe les dépendances Composer
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
@@ -40,3 +44,6 @@ RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-avail
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 RUN chown -R www-data:www-data var
+
+ENTRYPOINT ["entrypoint"]
+CMD ["apache2-foreground"]
