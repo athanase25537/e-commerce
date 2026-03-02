@@ -46,7 +46,10 @@
                             <td>{{ product.price }}</td>
                             <td>
                                 {% if product.stock is not null %}
-                                    {{ product.stock }}
+                                    {% if product.stock == 0 %}
+                                        <span class="text-danger">Rupture de stock</span>
+                                    {% else %}{{ product.stock }}
+                                    {% endif %}
                                 {% else %}
                                     <span class="text-muted">-</span>
                                 {% endif %}

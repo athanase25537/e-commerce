@@ -1,3 +1,19 @@
 body {
     background-color: rgb(242, 242, 242);
 }
+
+.app-navbar .navbar-collapse {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+}
+
+.app-navbar .navbar-nav {
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+}
+
+.app-navbar .navbar-nav .nav-link,
+.app-navbar .navbar-text {
+    white-space: nowrap;
+    padding: 0.35rem 0.5rem;
+}
