@@ -43,10 +43,17 @@ class Product
     #[ORM\OneToMany(targetEntity: AddProductHistory::class, mappedBy: 'product')]
     private Collection $addProductHistories;
 
+    /**
+     * @var Collection<int, Review>
+     */
+    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'product', orphanRemoval: true)]
+    private Collection $reviews;
+
     public function __construct()
     {
         $this->subCategories = new ArrayCollection();
         $this->addProductHistories = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,5 +173,56 @@ class Product
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): static
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews->add($review);
+            $review->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): static
+    {
+        if ($this->reviews->removeElement($review)) {
+            if ($review->getProduct() === $this) {
+                $review->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAverageRating(): float
+    {
+        if ($this->reviews->isEmpty()) {
+            return 0.0;
+        }
+
+        $sum = 0;
+        $count = 0;
+        foreach ($this->reviews as $review) {
+            if ($review->isApproved()) {
+                $sum += (int) $review->getRating();
+                $count++;
+            }
+        }
+
+        if ($count === 0) {
+            return 0.0;
+        }
+
+        return $sum / $count;
     }
 }
