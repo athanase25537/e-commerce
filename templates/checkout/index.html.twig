@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Checkout | E-commerce{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
+        <div>
+            <h1 class="h3 mb-1">Finaliser la commande</h1>
+            <p class="text-muted mb-0">Verifiez vos informations avant de confirmer.</p>
+        </div>
+        <a href="{{ path('app_cart_index') }}" class="btn btn-outline-dark">Retour au panier</a>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12 col-lg-7">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    <div class="row g-3">
+                        <div class="col-12">
+                            {{ form_row(form.customerName) }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ form_row(form.email) }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ form_row(form.phone) }}
+                        </div>
+                        <div class="col-12">
+                            {{ form_row(form.addressLine1) }}
+                        </div>
+                        <div class="col-12">
+                            {{ form_row(form.addressLine2) }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ form_row(form.city) }}
+                        </div>
+                        <div class="col-12 col-md-3">
+                            {{ form_row(form.postalCode) }}
+                        </div>
+                        <div class="col-12 col-md-3">
+                            {{ form_row(form.country) }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ form_row(form.shippingMethod) }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ form_row(form.paymentMethod) }}
+                        </div>
+                    </div>
+                    <button class="btn btn-dark btn-lg mt-4">Confirmer la commande</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-5">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h2 class="h5">Votre panier</h2>
+                    <div class="checkout-items">
+                        {% for item in items %}
+                            <div class="checkout-item">
+                                <div>
+                                    <div class="fw-semibold">{{ item.product.name }}</div>
+                                    <div class="text-muted small">Quantite: {{ item.quantity }}</div>
+                                </div>
+                                <div class="fw-semibold">{{ item.lineTotal }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="d-flex justify-content-between pt-3 border-top">
+                        <span>Sous-total</span>
+                        <span>{{ total }}</span>
+                    </div>
+                    {% if coupon and preview_discount > 0 %}
+                        <div class="d-flex justify-content-between">
+                            <span>Remise ({{ coupon.code }})</span>
+                            <span>-{{ preview_discount }}</span>
+                        </div>
+                    {% endif %}
+                    <div class="d-flex justify-content-between">
+                        <span>Livraison</span>
+                        <span>{{ preview_shipping_fee }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between border-top pt-3 mt-2">
+                        <span>Total</span>
+                        <strong>{{ preview_total }}</strong>
+                    </div>
+                    <p class="text-muted small mt-3 mb-0">
+                        Paiement securise. Le statut de paiement est mis a jour par l'administration.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
