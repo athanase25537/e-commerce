@@ -3,6 +3,7 @@
 {% block title %}Checkout | E-commerce{% endblock %}
 
 {% block body %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
 <div class="container py-5">
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
         <div>
@@ -14,9 +15,16 @@
 
     <div class="row g-4">
         <div class="col-12 col-lg-7">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
-                    {{ form_start(form) }}
+            <div class="card border-0 shadow-sm checkout-card">
+                <div class="card-body p-4 p-lg-5">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <div>
+                            <h2 class="h5 mb-1">Informations de livraison</h2>
+                            <p class="text-muted small mb-0">Renseignez vos coordonnees pour la livraison.</p>
+                        </div>
+                        <span class="badge text-bg-light">Securise</span>
+                    </div>
+                    {{ form_start(form, {'attr': {'class': 'checkout-form'}}) }}
                     <div class="row g-3">
                         <div class="col-12">
                             {{ form_row(form.customerName) }}
@@ -49,14 +57,17 @@
                             {{ form_row(form.paymentMethod) }}
                         </div>
                     </div>
-                    <button class="btn btn-dark btn-lg mt-4">Confirmer la commande</button>
+                    <div class="d-flex flex-wrap align-items-center gap-3 mt-4">
+                        <button class="btn btn-dark btn-lg">Confirmer la commande</button>
+                        <span class="text-muted small">Paiement traite par l'administration.</span>
+                    </div>
                     {{ form_end(form) }}
                 </div>
             </div>
         </div>
         <div class="col-12 col-lg-5">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
+            <div class="card border-0 shadow-sm checkout-card">
+                <div class="card-body p-4 p-lg-5">
                     <h2 class="h5">Votre panier</h2>
                     <div class="checkout-items">
                         {% for item in items %}

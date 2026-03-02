@@ -192,6 +192,30 @@ h1, h2, h3, h4, h5 {
     border-bottom: 1px dashed var(--brand-200);
 }
 
+.checkout-card {
+    border-radius: 20px;
+}
+
+.checkout-form .form-control,
+.checkout-form .form-select,
+.checkout-form .form-check-input {
+    box-shadow: none;
+}
+
+.checkout-form .form-control,
+.checkout-form .form-select {
+    width: 100%;
+}
+
+.checkout-form .form-label {
+    font-weight: 600;
+    color: var(--brand-700);
+}
+
+.checkout-form .form-select {
+    background-color: #fff;
+}
+
 .status-badge {
     text-transform: uppercase;
     font-size: 0.7rem;
