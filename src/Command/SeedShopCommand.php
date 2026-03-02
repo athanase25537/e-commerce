@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\SubCategory;
+use Doctrine\DBAL\Platforms\SqlitePlatform;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -41,8 +42,9 @@ class SeedShopCommand extends Command
         }
 
         $connection = $this->entityManager->getConnection();
-        $platform = $connection->getDatabasePlatform()->getName();
-        if ($platform === 'sqlite') {
+        $platform = $connection->getDatabasePlatform();
+        $isSqlite = $platform instanceof SqlitePlatform;
+        if ($isSqlite) {
             $connection->executeStatement('PRAGMA foreign_keys = OFF');
         }
 
@@ -62,7 +64,7 @@ class SeedShopCommand extends Command
             $connection->executeStatement('DELETE FROM ' . $table);
         }
 
-        if ($platform === 'sqlite') {
+        if ($isSqlite) {
             foreach ($tables as $table) {
                 $connection->executeStatement('DELETE FROM sqlite_sequence WHERE name = ?', [$table]);
             }
