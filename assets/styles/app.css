@@ -1,5 +1,25 @@
+:root {
+    --brand-900: #0f172a;
+    --brand-700: #1f2937;
+    --brand-200: #e2e8f0;
+    --brand-100: #f8fafc;
+    --accent: #d97706;
+}
+
 body {
-    background-color: rgb(242, 242, 242);
+    font-family: "Source Sans 3", "Segoe UI", sans-serif;
+    background: radial-gradient(circle at top, #f8fafc 0%, #eef2f7 50%, #e5e7eb 100%);
+    color: var(--brand-900);
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: "Playfair Display", "Times New Roman", serif;
+}
+
+.app-navbar {
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(8px);
 }
 
 .app-navbar .navbar-collapse {
@@ -15,5 +35,171 @@ body {
 .app-navbar .navbar-nav .nav-link,
 .app-navbar .navbar-text {
     white-space: nowrap;
-    padding: 0.35rem 0.5rem;
+    padding: 0.35rem 0.6rem;
 }
+
+.hero-section {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.06), rgba(217, 119, 6, 0.08));
+}
+
+.eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.hero-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+}
+
+.mini-product {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    background: var(--brand-100);
+}
+
+.mini-product__image {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--brand-200);
+}
+
+.mini-product__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mini-product__placeholder {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    font-size: 0.6rem;
+    color: #94a3b8;
+}
+
+.section-block {
+    padding: 3rem 0;
+}
+
+.category-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid var(--brand-200);
+    color: var(--brand-700);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.category-pill:hover {
+    color: var(--brand-900);
+    border-color: var(--accent);
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 18px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.product-card__media {
+    height: 210px;
+    background: var(--brand-100);
+}
+
+.product-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-card__placeholder {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+.product-card__body {
+    padding: 1rem 1.2rem 1.3rem;
+    flex: 1;
+}
+
+.price-tag {
+    font-weight: 700;
+    color: var(--brand-900);
+}
+
+.price-tag--lg {
+    font-size: 1.5rem;
+}
+
+.product-detail__media {
+    background: #fff;
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.product-detail__media img {
+    width: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+}
+
+.cart-thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--brand-200);
+    background: #fff;
+}
+
+.cart-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.checkout-items {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.checkout-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px dashed var(--brand-200);
+}
+
+.status-badge {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+}
+
+.status-pending { background: rgba(217, 119, 6, 0.15); color: #b45309; }
+.status-paid { background: rgba(34, 197, 94, 0.15); color: #15803d; }
+.status-shipped { background: rgba(59, 130, 246, 0.15); color: #1d4ed8; }
+.status-completed { background: rgba(15, 118, 110, 0.15); color: #0f766e; }
+.status-cancelled { background: rgba(248, 113, 113, 0.2); color: #b91c1c; }
