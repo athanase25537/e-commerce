@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }} | Boutique{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row g-5 align-items-start">
+        <div class="col-12 col-lg-6">
+            <div class="product-detail__media">
+                {% if product.image %}
+                    <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
+                {% else %}
+                    <div class="product-card__placeholder">Image indisponible</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <a href="{{ path('app_shop_index') }}" class="text-muted small">← Retour a la boutique</a>
+            <h1 class="h3 mt-2">{{ product.name }}</h1>
+            <p class="text-muted">{{ product.description }}</p>
+            <div class="d-flex align-items-center gap-3 mb-3">
+                <span class="price-tag price-tag--lg">{{ product.price }}</span>
+                {% if reviews|length > 0 %}
+                    <span class="badge text-bg-light">Note moyenne: {{ product.getAverageRating()|number_format(1, '.', ' ') }}/5</span>
+                {% endif %}
+                {% if product.stock is not null %}
+                    {% if product.stock == 0 %}
+                        <span class="badge text-bg-light">Rupture</span>
+                    {% else %}
+                        <span class="badge text-bg-success">En stock: {{ product.stock }}</span>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <form method="post" action="{{ path('app_cart_add', {id: product.id}) }}" class="d-flex flex-wrap gap-2">
+                <input type="hidden" name="_token" value="{{ csrf_token('cart_add_' ~ product.id) }}">
+                <div class="d-flex align-items-center gap-2">
+                    <label for="quantity" class="form-label mb-0">Quantite</label>
+                    <input type="number"
+                           id="quantity"
+                           name="quantity"
+                           class="form-control form-control-sm"
+                           value="1"
+                           min="1"
+                           {% if product.stock is not null %}max="{{ product.stock }}"{% endif %}>
+                </div>
+                <button type="submit" class="btn btn-dark" {% if product.stock is not null and product.stock == 0 %}disabled{% endif %}>
+                    Ajouter au panier
+                </button>
+                <a href="{{ path('app_cart_index') }}" class="btn btn-outline-dark">Voir le panier</a>
+            </form>
+
+            <div class="mt-4">
+                <h2 class="h6">Categories</h2>
+                <div class="d-flex flex-wrap gap-2">
+                    {% for subCategory in product.subCategories %}
+                        <span class="badge text-bg-light">{{ subCategory.name }}</span>
+                    {% else %}
+                        <span class="text-muted small">Aucune categorie associee.</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12 col-lg-8">
+            <h2 class="h5 mb-3">Avis clients ({{ reviews|length }})</h2>
+            <div class="review-list">
+                {% for review in reviews %}
+                    <div class="review-card">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <strong>{{ review.user.firstname }} {{ review.user.lastname }}</strong>
+                            <span class="text-muted small">{{ review.createdAt|date('d/m/Y') }}</span>
+                        </div>
+                        <div class="text-muted small mb-2">Note: {{ review.rating }}/5</div>
+                        <p class="mb-0">{{ review.comment }}</p>
+                    </div>
+                {% else %}
+                    <div class="alert alert-light">Aucun avis pour le moment.</div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h3 class="h6 mb-3">Laisser un avis</h3>
+                    {% if app.user %}
+                        {{ form_start(review_form, { action: path('app_review_create', {id: product.id}) }) }}
+                        {{ form_row(review_form.rating) }}
+                        {{ form_row(review_form.comment) }}
+                        <button class="btn btn-dark btn-sm mt-2">Publier</button>
+                        {{ form_end(review_form) }}
+                    {% else %}
+                        <p class="text-muted small mb-3">Connectez-vous pour laisser un avis.</p>
+                        <a href="{{ path('app_login') }}" class="btn btn-outline-dark btn-sm">Se connecter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
