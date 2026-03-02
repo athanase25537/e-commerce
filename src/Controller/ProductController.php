@@ -56,6 +56,13 @@ final class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
+            $stockHistory = new AddProductHistory();
+            $stockHistory->setProduct($product);
+            $stockHistory->setQte($form->getData()->getStock());
+            $stockHistory->setCreatedAt(new DateTimeImmutable());
+            $entityManager->persist($stockHistory);
+            $entityManager->flush();
+
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -103,13 +110,6 @@ final class ProductController extends AbstractController
             $stock = $form->getData()->getStock() + $oldStock;
             $product->setStock($stock);
 
-            $entityManager->flush();
-
-            $stockHistory = new AddProductHistory();
-            $stockHistory->setProduct($product);
-            $stockHistory->setQte($form->getData()->getStock());
-            $stockHistory->setCreatedAt(new DateTimeImmutable());
-            $entityManager->persist($stockHistory);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
