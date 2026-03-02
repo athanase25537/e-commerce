@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Boutique | E-commerce{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
+        <div>
+            <h1 class="h3 mb-1">Boutique</h1>
+            <p class="text-muted mb-0">{{ products|length }} produit(s) trouves</p>
+        </div>
+        <a href="{{ path('app_cart_index') }}" class="btn btn-outline-dark">Voir le panier</a>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3 align-items-end">
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Recherche</label>
+                    <input type="text" name="q" value="{{ search_query }}" class="form-control" placeholder="Nom ou description">
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label">Categorie</label>
+                    <select name="category" class="form-select">
+                        <option value="">Toutes</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}" {{ category.id == selected_category ? 'selected' : '' }}>
+                                {{ category.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label">Sous-categorie</label>
+                    <select name="sub" class="form-select">
+                        <option value="">Toutes</option>
+                        {% for subCategory in sub_categories %}
+                            <option value="{{ subCategory.id }}" {{ subCategory.id == selected_sub_category ? 'selected' : '' }}>
+                                {{ subCategory.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12 col-md-2 d-grid">
+                    <button class="btn btn-dark" type="submit">Filtrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% for product in products %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="product-card h-100">
+                    <div class="product-card__media">
+                        {% if product.image %}
+                            <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
+                        {% else %}
+                            <div class="product-card__placeholder">Image indisponible</div>
+                        {% endif %}
+                    </div>
+                    <div class="product-card__body">
+                        <h3 class="h6">{{ product.name }}</h3>
+                        <p class="text-muted small mb-2">{{ product.description|slice(0, 90) }}{% if product.description|length > 90 %}...{% endif %}</p>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <span class="price-tag">{{ product.price }}</span>
+                            {% if product.stock is not null and product.stock == 0 %}
+                                <span class="badge text-bg-light">Rupture</span>
+                            {% endif %}
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="{{ path('app_shop_show', {id: product.id}) }}" class="btn btn-outline-dark btn-sm">Voir</a>
+                            <form method="post" action="{{ path('app_cart_add', {id: product.id}) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('cart_add_' ~ product.id) }}">
+                                <button type="submit" class="btn btn-dark btn-sm" {% if product.stock is not null and product.stock == 0 %}disabled{% endif %}>
+                                    Ajouter
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-light">Aucun produit ne correspond a votre recherche.</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
