@@ -23,6 +23,9 @@ RUN apt-get update \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
 
+# Installe Composer (avant d'exécuter composer install)
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 # Copie tous les fichiers du projet
 COPY . .
 
@@ -33,7 +36,7 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
     && sed -ri -e 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Installe Composer
+# Installe Composer à partir de l'image composer officielle
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 RUN chown -R www-data:www-data var
