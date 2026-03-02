@@ -5,6 +5,7 @@ ENV APP_ENV=dev \
 
 WORKDIR /var/www/html
 
+# Met à jour et installe les dépendances nécessaires
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         git \
@@ -12,6 +13,8 @@ RUN apt-get update \
         libicu-dev \
         libpq-dev \
         libzip-dev \
+        sqlite3 \
+        libsqlite3-dev \
     && docker-php-ext-install \
         intl \
         pdo_pgsql \
@@ -27,6 +30,7 @@ RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-avail
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# Copie des fichiers de configuration
 COPY composer.json composer.lock symfony.lock ./
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
