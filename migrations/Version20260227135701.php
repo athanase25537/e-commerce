@@ -20,7 +20,7 @@ final class Version20260227135701 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE product ADD COLUMN stock INTEGER NOT NULL');
+        $this->addSql('ALTER TABLE product ADD COLUMN stock INTEGER NOT NULL DEFAULT 0');
     }
 
     public function down(Schema $schema): void

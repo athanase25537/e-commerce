@@ -25,7 +25,7 @@ final class Version20260302090000 extends AbstractMigration
         $hasOrderItem = $schemaManager->tablesExist(['order_item']);
 
         if (!$hasCustomerOrder) {
-            $this->addSql('CREATE TABLE customer_order (id SERIAL PRIMARY KEY, user_id INTEGER DEFAULT NULL, customer_name VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, phone VARCHAR(30) DEFAULT NULL, address_line1 VARCHAR(255) NOT NULL, address_line2 VARCHAR(255) DEFAULT NULL, city VARCHAR(100) NOT NULL, postal_code VARCHAR(30) DEFAULT NULL, country VARCHAR(80) NOT NULL, status VARCHAR(30) NOT NULL, total_amount INTEGER NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, CONSTRAINT FK_D3C0A4B2A76ED395 FOREIGN KEY (user_id) REFERENCES user (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+            $this->addSql('CREATE TABLE customer_order (id SERIAL PRIMARY KEY, user_id INTEGER DEFAULT NULL, customer_name VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, phone VARCHAR(30) DEFAULT NULL, address_line1 VARCHAR(255) NOT NULL, address_line2 VARCHAR(255) DEFAULT NULL, city VARCHAR(100) NOT NULL, postal_code VARCHAR(30) DEFAULT NULL, country VARCHAR(80) NOT NULL, status VARCHAR(30) NOT NULL, total_amount INTEGER NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, CONSTRAINT FK_D3C0A4B2A76ED395 FOREIGN KEY (user_id) REFERENCES app_user (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
             $this->addSql('CREATE INDEX IDX_D3C0A4B2A76ED395 ON customer_order (user_id)');
         }
 
