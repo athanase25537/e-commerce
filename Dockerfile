@@ -1,6 +1,8 @@
 FROM php:8.4-apache
 
-ENV APP_ENV=dev \
+ARG APP_ENV=prod
+ENV APP_ENV=${APP_ENV} \
+    APP_DEBUG=0 \
     COMPOSER_ALLOW_SUPERUSER=1
 
 WORKDIR /var/www/html
