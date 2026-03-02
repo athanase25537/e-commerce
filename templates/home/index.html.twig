@@ -34,7 +34,7 @@
                                 <div class="mini-product">
                                     <div class="mini-product__image">
                                         {% if product.image %}
-                                            <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
+                                            <img src="{{ product.image starts with 'http' ? product.image : asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
                                         {% else %}
                                             <div class="mini-product__placeholder">No image</div>
                                         {% endif %}
@@ -93,7 +93,7 @@
                     <div class="product-card h-100">
                         <div class="product-card__media">
                             {% if product.image %}
-                                <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
+                                <img src="{{ product.image starts with 'http' ? product.image : asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
                             {% else %}
                                 <div class="product-card__placeholder">Image indisponible</div>
                             {% endif %}
