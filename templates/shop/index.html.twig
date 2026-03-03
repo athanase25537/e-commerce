@@ -62,13 +62,13 @@
                     <div class="product-card__body">
                         <h3 class="h6">{{ product.name }}</h3>
                         <p class="text-muted small mb-2">{{ product.description|slice(0, 90) }}{% if product.description|length > 90 %}...{% endif %}</p>
-                        <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
                             <span class="price-tag">{{ product.price|number_format(2, ',', ' ') }} MGA</span>
                             {% if product.stock is not null and product.stock == 0 %}
                                 <span class="badge text-bg-light">Rupture</span>
                             {% endif %}
                         </div>
-                        <div class="d-flex gap-2">
+                        <div class="d-flex flex-wrap gap-2">
                             <a href="{{ path('app_shop_show', {id: product.id}) }}" class="btn btn-outline-dark btn-sm">Voir</a>
                             <form method="post" action="{{ path('app_cart_add', {id: product.id}) }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token('cart_add_' ~ product.id) }}">
