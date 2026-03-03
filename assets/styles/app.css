@@ -121,6 +121,7 @@ h1, h2, h3, h4, h5 {
 .product-card__media {
     height: clamp(180px, 32vw, 230px);
     background: var(--brand-100);
+    overflow: hidden;
 }
 
 .product-card__media img {
@@ -156,12 +157,15 @@ h1, h2, h3, h4, h5 {
     border-radius: 20px;
     padding: 1.5rem;
     border: 1px solid rgba(15, 23, 42, 0.08);
+    overflow: hidden;
 }
 
 .product-detail__media img {
     width: 100%;
+    max-width: 100%;
     border-radius: 16px;
     object-fit: cover;
+    display: block;
 }
 
 .cart-thumb {
