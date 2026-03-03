@@ -38,21 +38,11 @@ final class ProductController extends AbstractController
             /** @var UploadedFile|null $imageFile */
             $imageFile = $form->get('image')->getData();
             if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = preg_replace('/[^A-Za-z0-9_-]/', '-', $originalFilename);
-                $safeFilename = trim($safeFilename, '-');
-                if ($safeFilename === '') {
-                    $safeFilename = 'image';
+                $contents = file_get_contents($imageFile->getPathname());
+                if ($contents !== false) {
+                    $product->setImage($contents);
+                    $product->setImageMimeType($imageFile->getMimeType() ?: 'application/octet-stream');
                 }
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
-
-                $targetDirectory = $this->getParameter('kernel.project_dir') . '/public/uploads/images';
-                if (!is_dir($targetDirectory)) {
-                    mkdir($targetDirectory, 0775, true);
-                }
-
-                $imageFile->move($targetDirectory, $newFilename);
-                $product->setImage($newFilename);
             }
 
             $entityManager->persist($product);
@@ -90,24 +80,13 @@ final class ProductController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile|null $imageFile */
-
             $imageFile = $form->get('image')->getData();
             if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = preg_replace('/[^A-Za-z0-9_-]/', '-', $originalFilename);
-                $safeFilename = trim($safeFilename, '-');
-                if ($safeFilename === '') {
-                    $safeFilename = 'image';
+                $contents = file_get_contents($imageFile->getPathname());
+                if ($contents !== false) {
+                    $product->setImage($contents);
+                    $product->setImageMimeType($imageFile->getMimeType() ?: 'application/octet-stream');
                 }
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
-
-                $targetDirectory = $this->getParameter('kernel.project_dir') . '/public/uploads/images';
-                if (!is_dir($targetDirectory)) {
-                    mkdir($targetDirectory, 0775, true);
-                }
-
-                $imageFile->move($targetDirectory, $newFilename);
-                $product->setImage($newFilename);
             }
             $stock = $form->getData()->getStock() + $oldStock;
             $product->setStock($stock);

@@ -7,8 +7,8 @@
     <div class="row g-5 align-items-start">
         <div class="col-12 col-lg-6">
             <div class="product-detail__media">
-                {% if product.image %}
-                    <img src="{{ product.image starts with 'http' ? product.image : asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
+                {% if product.imageSrc %}
+                    <img src="{{ product.imageSrc }}" alt="{{ product.name }}">
                 {% else %}
                     <div class="product-card__placeholder">Image indisponible</div>
                 {% endif %}

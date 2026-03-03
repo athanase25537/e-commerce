@@ -30,6 +30,32 @@ class SeedShopCommand extends Command
         $this->addOption('force', null, InputOption::VALUE_NONE, 'Skip confirmation and wipe existing data.');
     }
 
+    private function applyImage(Product $product, string $source): void
+    {
+        if ($source === '') {
+            return;
+        }
+
+        if (filter_var($source, FILTER_VALIDATE_URL)) {
+            $data = @file_get_contents($source);
+            if ($data !== false) {
+                $mimeType = 'application/octet-stream';
+                if (class_exists(\finfo::class)) {
+                    $finfo = new \finfo(FILEINFO_MIME_TYPE);
+                    $detected = $finfo->buffer($data);
+                    if (is_string($detected) && $detected !== '') {
+                        $mimeType = $detected;
+                    }
+                }
+                $product->setImage($data);
+                $product->setImageMimeType($mimeType);
+                return;
+            }
+        }
+
+        $product->setImage($source);
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -242,7 +268,7 @@ class SeedShopCommand extends Command
             $product->setPrice($data['price']);
             $product->setStock($data['stock']);
             if (!empty($data['image'])) {
-                $product->setImage($data['image']);
+                $this->applyImage($product, $data['image']);
             }
 
             foreach ($data['subs'] as $subName) {

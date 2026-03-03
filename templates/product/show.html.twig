@@ -33,8 +33,8 @@
                             <tr>
                                 <th scope="row" class="text-muted">Image</th>
                                 <td>
-                                    {% if product.image %}
-                                        <img src="{{ product.image starts with 'http' ? product.image : asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}" class="rounded border"
+                                    {% if product.imageSrc %}
+                                        <img src="{{ product.imageSrc }}" alt="{{ product.name }}" class="rounded border"
                                              style="max-width: 220px; height: auto;">
                                     {% else %}
                                         <span class="text-muted">-</span>

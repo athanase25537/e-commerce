@@ -31,8 +31,14 @@ class Product
     #[ORM\ManyToMany(targetEntity: SubCategory::class, inversedBy: 'products')]
     private Collection $subCategories;
 
+    /**
+     * @var resource|string|null
+     */
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $image = null;
+
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null;
+    private ?string $imageMimeType = null;
 
     #[ORM\Column]
     private ?int $stock = null;
@@ -123,6 +129,19 @@ class Product
 
     public function getImage(): ?string
     {
+        if ($this->image === null) {
+            return null;
+        }
+
+        if (is_resource($this->image)) {
+            $meta = stream_get_meta_data($this->image);
+            if (!empty($meta['seekable'])) {
+                rewind($this->image);
+            }
+            $contents = stream_get_contents($this->image);
+            $this->image = $contents === false ? null : $contents;
+        }
+
         return $this->image;
     }
 
@@ -131,6 +150,42 @@ class Product
         $this->image = $image;
 
         return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(?string $imageMimeType): static
+    {
+        $this->imageMimeType = $imageMimeType;
+
+        return $this;
+    }
+
+    public function getImageSrc(): ?string
+    {
+        $image = $this->getImage();
+        if ($image === null) {
+            return null;
+        }
+
+        if ($this->imageMimeType) {
+            return sprintf('data:%s;base64,%s', $this->imageMimeType, base64_encode($image));
+        }
+
+        if (is_string($image)) {
+            if (str_starts_with($image, 'http://') || str_starts_with($image, 'https://') || str_starts_with($image, 'data:')) {
+                return $image;
+            }
+
+            if (preg_match('/\\A[\\w\\-.]+\\z/', $image) === 1) {
+                return '/uploads/images/' . $image;
+            }
+        }
+
+        return null;
     }
 
     public function getStock(): ?int

@@ -34,8 +34,8 @@
                                 <div class="mini-product d-flex justify-content-between border">
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="mini-product__image">
-                                            {% if product.image %}
-                                                <img src="{{ product.image starts with 'http' ? product.image : asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
+                                            {% if product.imageSrc %}
+                                                <img src="{{ product.imageSrc }}" alt="{{ product.name }}">
                                             {% else %}
                                                 <div class="mini-product__placeholder">No image</div>
                                             {% endif %}
@@ -94,8 +94,8 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="product-card h-100">
                         <div class="product-card__media">
-                            {% if product.image %}
-                                <img src="{{ product.image starts with 'http' ? product.image : asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
+                            {% if product.imageSrc %}
+                                <img src="{{ product.imageSrc }}" alt="{{ product.name }}">
                             {% else %}
                                 <div class="product-card__placeholder">Image indisponible</div>
                             {% endif %}
