@@ -19,6 +19,7 @@ final class Version20260303090000 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
+        $this->addSql('ALTER TABLE product ALTER COLUMN image DROP DEFAULT');
         $this->addSql('ALTER TABLE product ALTER COLUMN image TYPE BYTEA USING image::bytea');
         $this->addSql('ALTER TABLE product ADD image_mime_type VARCHAR(255) DEFAULT NULL');
     }
