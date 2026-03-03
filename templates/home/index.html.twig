@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="mini-product__content">
                                             <h3 class="h6 mb-1">{{ product.name }}</h3>
-                                            <p class="text-muted small mb-0">{{ product.price }} </p>
+                                            <p class="text-muted small mb-0">{{ product.price }} MGA</p>
                                         </div>
                                     </div>
                                     <a href="{{ path('app_shop_show', {id: product.id}) }}" class="btn btn-sm btn-outline-dark">Voir</a>
@@ -104,7 +104,7 @@
                             <h3 class="h6">{{ product.name }}</h3>
                             <p class="text-muted small mb-2">{{ product.description|slice(0, 80) }}{% if product.description|length > 80 %}...{% endif %}</p>
                             <div class="d-flex align-items-center justify-content-between">
-                                <span class="price-tag">{{ product.price }}</span>
+                                <span class="price-tag">{{ product.price|format_number(locale='fr') }} MGA</span>
                                 <a href="{{ path('app_shop_show', {id: product.id}) }}" class="btn btn-sm btn-dark">Decouvrir</a>
                             </div>
                         </div>

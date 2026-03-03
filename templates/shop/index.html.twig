@@ -63,7 +63,7 @@
                         <h3 class="h6">{{ product.name }}</h3>
                         <p class="text-muted small mb-2">{{ product.description|slice(0, 90) }}{% if product.description|length > 90 %}...{% endif %}</p>
                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <span class="price-tag">{{ product.price }}</span>
+                            <span class="price-tag">{{ product.price }} MGA</span>
                             {% if product.stock is not null and product.stock == 0 %}
                                 <span class="badge text-bg-light">Rupture</span>
                             {% endif %}
