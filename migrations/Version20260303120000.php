@@ -42,7 +42,7 @@ final class Version20260303120000 extends AbstractMigration
             $categoryId = $categoryIds[$categoryName];
             foreach ($subCategories as $subCategoryName) {
                 $this->connection->executeStatement(
-                    'INSERT INTO sub_category (name, category_id)\n                    SELECT ?, ?\n                    WHERE NOT EXISTS (\n                        SELECT 1 FROM sub_category WHERE name = ? AND category_id = ?\n                    )',
+                    "INSERT INTO sub_category (name, category_id)\n                    SELECT ?, ?\n                    WHERE NOT EXISTS (\n                        SELECT 1 FROM sub_category WHERE name = ? AND category_id = ?\n                    )",
                     [$subCategoryName, $categoryId, $subCategoryName, $categoryId]
                 );
             }
@@ -91,7 +91,7 @@ final class Version20260303120000 extends AbstractMigration
             }
 
             $this->connection->executeStatement(
-                'DELETE FROM product p\n                USING product_sub_category psc, sub_category sc\n                WHERE p.id = psc.product_id\n                  AND psc.sub_category_id = sc.id\n                  AND sc.category_id = ?',
+                "DELETE FROM product p\n                USING product_sub_category psc, sub_category sc\n                WHERE p.id = psc.product_id\n                  AND psc.sub_category_id = sc.id\n                  AND sc.category_id = ?",
                 [(int) $categoryId]
             );
 
