@@ -19,7 +19,9 @@
         {% endblock %}
     </head>
     <body>
-        {% include 'layouts/_menu.html.twig' %}
+        <header class="sticky-top">
+            {% include 'layouts/_menu.html.twig' %}
+        </header>
         {% include 'layouts/_flash.html.twig' %}
         {% block body %}{% endblock %}
     </body>
