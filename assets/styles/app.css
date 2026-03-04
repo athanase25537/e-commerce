@@ -38,6 +38,13 @@ h1, h2, h3, h4, h5 {
     padding: 0.35rem 0.6rem;
 }
 
+.app-navbar .btn-outline-dark:hover,
+.app-navbar .btn-outline-dark:focus-visible {
+    background: transparent;
+    border-color: #6b7280;
+    color: #6b7280;
+}
+
 .hero-section {
     background: linear-gradient(135deg, rgba(15, 23, 42, 0.06), rgba(217, 119, 6, 0.08));
 }
