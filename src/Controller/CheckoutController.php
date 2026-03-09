@@ -43,6 +43,8 @@ final class CheckoutController extends AbstractController
             'email' => $user ? $user->getUserIdentifier() : '',
         ];
 
+        dd($prefill);
+
         $form = $this->createForm(CheckoutType::class, $prefill);
         $form->handleRequest($request);
 

@@ -3,6 +3,7 @@
 {% block title %}Boutique | E-commerce{% endblock %}
 
 {% block body %}
+
 <div class="container py-5">
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
         <div>
@@ -22,7 +23,7 @@
                 <div class="col-12 col-md-3">
                     <label class="form-label">Categorie</label>
                     <select name="category" class="form-select">
-                        <option value="">Toutes</option>
+                        <option value="0">Toutes</option>
                         {% for category in categories %}
                             <option value="{{ category.id }}" {{ category.id == selected_category ? 'selected' : '' }}>
                                 {{ category.name }}
@@ -33,7 +34,7 @@
                 <div class="col-12 col-md-3">
                     <label class="form-label">Sous-categorie</label>
                     <select name="sub" class="form-select">
-                        <option value="">Toutes</option>
+                        <option value="0">Toutes</option>
                         {% for subCategory in sub_categories %}
                             <option value="{{ subCategory.id }}" {{ subCategory.id == selected_sub_category ? 'selected' : '' }}>
                                 {{ subCategory.name }}
