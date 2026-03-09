@@ -32,7 +32,6 @@ class ProductRepository extends ServiceEntityRepository
         }
 
         if ($categoryId) {
-            dd(["here", $categoryId]);
             $qb->andWhere('c.id = :categoryId')
                 ->setParameter('categoryId', $categoryId);
         }
